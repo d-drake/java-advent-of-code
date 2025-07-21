@@ -19,26 +19,18 @@ public class Day1 implements Day {
         solveForSolution(true);
     }
 
-    public void solveForSolution(boolean example) {
+    private void solveForSolution(boolean example) {
         // System.out.println("Example: " + example);
         List<String> input = new ArrayList<>();
         if (example) {
-            input = loadDay1Input(example);
+            input = loadInput(example);
         } else {
-            input = loadDay1Input(false);
+            input = loadInput(false);
         }
         TwoLists parsedInput = parseAndSortInput(input);
         var arrayDiffs = getArrayAbsDifferences(parsedInput);
         var sum = sumArrayDifferences(arrayDiffs);
         System.out.println("The total distance between left and right distance is: " + sum);
-    }
-
-    public List<String> loadDay1Input(boolean example) {
-        // System.out.println("Example: " + example);
-        if (example) {
-            return loadInput(example);
-        }
-        return loadInput();
     }
 
     private TwoLists parseAndSortInput(List<String> rawInput) {
