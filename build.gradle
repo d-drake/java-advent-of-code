@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'com.ddrake.adventofcode.Main'
+}
+
+test {
+    useJUnit()
+
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+java {
+      toolchain {
+          languageVersion = JavaLanguageVersion.of(21)
+      }
+  }
