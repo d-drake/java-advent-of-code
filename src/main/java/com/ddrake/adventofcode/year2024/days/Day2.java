@@ -16,7 +16,6 @@ public class Day2 implements Day {
     }
 
     private void solveForSolution(boolean example) {
-        // System.out.println("Example: " + example);
         List<String> input = new ArrayList<>();
         if (example) {
             input = loadInput(example);
@@ -26,12 +25,8 @@ public class Day2 implements Day {
         var parsedInput = parseInput(input);
         var arrayReports = checkReportSafetyMonotonic(parsedInput);
         arrayReports = checkReportSafetyAdjacentLevels(arrayReports);
-        // System.out.println(parsedInput);
+        //
         System.out.println("The total number of safe reports is: " + arrayReports.size());
-        // var arrayDiffs = getArrayAbsDifferences(parsedInput);
-        // var sum = sumArrayDifferences(arrayDiffs);
-        // System.out.println("The total distance between left and right distance is: "
-        // + sum);
     }
 
     private List<List<Integer>> parseInput(List<String> inputStrings) {
@@ -90,6 +85,7 @@ public class Day2 implements Day {
 
 }
 
+// Local Utilities
 class ArrayIntegersMonotonicChecker {
     // is strictly monotonic check
     public static boolean isStrictlyMonotonic(List<Integer> arr) {

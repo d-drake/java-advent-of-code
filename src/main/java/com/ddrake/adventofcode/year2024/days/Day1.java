@@ -20,7 +20,6 @@ public class Day1 implements Day {
     }
 
     private void solveForSolution(boolean example) {
-        // System.out.println("Example: " + example);
         List<String> input = new ArrayList<>();
         if (example) {
             input = loadInput(example);
