@@ -92,13 +92,14 @@ public class Day2 implements Day {
 | Day | Problem | Solution | Status |
 |-----|---------|----------|--------|
 | [Day 1](https://adventofcode.com/2024/day/1) | Historian Hysteria | [Day1.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day1.java) | ⭐ |
-| Day 2-25 | Coming Soon | - | - |
+| [Day 2](https://adventofcode.com/2024/day/2) | Red-Nosed Reports | [Day2.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day2.java) | ⭐ |
+| [Day 3](https://adventofcode.com/2024/day/3) | Mull It Over | [Day3.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day3.java) | ⭐ |
+| [Day 4](https://adventofcode.com/2024/day/4) | Ceres Search | [Day4.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day4.java) | ⭐ |
+| Day 5-25 | Coming Soon | - | - |
 
 ## Resources
 
 - [Advent of Code](https://adventofcode.com/) - The official website
-- [Advent of Code Subreddit](https://www.reddit.com/r/adventofcode/) - Community discussions
-- [Awesome Advent of Code](https://github.com/Bogdanp/awesome-advent-of-code) - Collection of resources
 
 ## License
 
