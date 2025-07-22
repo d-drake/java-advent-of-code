@@ -11,6 +11,7 @@ public class DayRegistry {
         registerDay(2024, 1, new com.ddrake.adventofcode.year2024.days.Day1());
         registerDay(2024, 2, new com.ddrake.adventofcode.year2024.days.Day2());
         registerDay(2024, 3, new com.ddrake.adventofcode.year2024.days.Day3());
+        registerDay(2024, 4, new com.ddrake.adventofcode.year2024.days.Day4());
         // Add more days as they're implemented
     }
 
