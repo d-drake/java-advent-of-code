@@ -1,97 +1,126 @@
+// Day 1: Historian Hysteria
+// 
+// https://adventofcode.com/2024/day/1
+// 
+// input format ~ lines where there are 2 integers serpated by whitespace
+// 
+// Part 1: ~Find sum distance between two provided lists
+// Part 2: ~Find similiarty score between the same two lists
+
 package com.ddrake.adventofcode.year2024.days;
 
 import com.ddrake.adventofcode.Day;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-record TwoLists(List<Integer> listA, List<Integer> listB) {
+record NumberPair(int firstNumber, int secondNumber) {
 }
 
-public class Day1 implements Day {
+public class Day1 extends Day {
+    List<Integer> listA;
+    List<Integer> listB;
+    int resultPartOne;
+    int resultPartTwo;
+
+    // setters
+    private void setListA(List<Integer> listA) {
+        this.listA = listA;
+    }
+
+    private void setListB(List<Integer> listB) {
+        this.listB = listB;
+    }
+
+    private void setResultPartOne(int resultPartOne) {
+        this.resultPartOne = resultPartOne;
+    }
+
+    private void setResultPartTwo(int resultPartTwo) {
+        this.resultPartTwo = resultPartTwo;
+    }
+
+    // constructors
+    public Day1(boolean example) {
+        super(example);
+        readInputAssignToLists();
+    }
+
+    public Day1() {
+        this(false);
+    }
+
+    // part methods
     @Override
-    public void solve() {
-        solveForSolution(false);
+    public void part1() {
+        // calc sum distance
+        calculateTotalDistance();
+        System.out.println("The total distance between the two lists is: " + resultPartOne);
     }
 
-    public void solveExample() {
-        solveForSolution(true);
+    @Override
+    public void part2() {
+        // calc similiarty score
+        calcSimiliarityScore();
+        System.out.println("The similarity score is: " + resultPartTwo);
     }
 
-    private void solveForSolution(boolean example) {
-        List<String> input = new ArrayList<>();
-        if (example) {
-            input = loadInput(example);
-        } else {
-            input = loadInput(false);
-        }
-        TwoLists parsedInput = parseAndSortInput(input);
-        var arrayDiffs = getArrayAbsDifferences(parsedInput);
-        var sum = sumArrayDifferences(arrayDiffs);
-        System.out.println("The total distance between left and right distance is: " + sum);
+    // calc methods
+    protected void readInputAssignToLists() {
+        // get the input stream
+        var inputStream = loadInputStreamLineByLine(linePattern, numberPairMapper);
+        // init lists to fill
+        List<Integer> listA = new ArrayList<>();
+        List<Integer> listB = new ArrayList<>();
+        // use the stream to assign the numbers to separate lists
+        inputStream.forEach(numberPair -> {
+            listA.add(numberPair.firstNumber());
+            listB.add(numberPair.secondNumber());
+        });
+        // sort the lists
+        listA.sort(null);
+        listB.sort(null);
+        // assign lists to object
+        setListA(listA);
+        setListB(listB);
     }
 
-    private TwoLists parseAndSortInput(List<String> rawInput) {
-        // init output lists
-        List<Integer> firstList = new ArrayList<>();
-        List<Integer> secondList = new ArrayList<>();
+    private Pattern linePattern = Pattern.compile("(\\d+)\\s+(\\d+)");
 
-        // iterate through the raw input
-        for (String lineInput : rawInput) {
-            // split the string
-            String[] splitString = lineInput.split("\\s+");
+    private Function<Matcher, NumberPair> numberPairMapper = matcher -> {
+        int firstNumber = Integer.parseInt(matcher.group(1));
+        int secondNumber = Integer.parseInt(matcher.group(2));
+        return new NumberPair(firstNumber, secondNumber);
+    };
 
-            // parse the line & convert strings to integers
-            if (splitString.length == 2) {
-                try {
-                    int num1 = Integer.parseInt(splitString[0]);
-                    int num2 = Integer.parseInt(splitString[1]);
-
-                    firstList.add(num1);
-                    secondList.add(num2);
-
-                } catch (NumberFormatException e) {
-                    System.err.println("Error: Invalid number format in string, " + lineInput + ". Full Error Message: "
-                            + e.getMessage());
-                }
-            } else {
-                System.err.println("Error: String does not contain exactly two integers, " + lineInput + ".");
-            }
-        }
-        // sort the lists of ints
-        Collections.sort(firstList);
-        Collections.sort(secondList);
-        return new TwoLists(firstList, secondList);
-    }
-
-    private List<Integer> getArrayAbsDifferences(TwoLists twoLists) {
-        // inst the diffs array
-        List<Integer> absoluteDifferences = new ArrayList<>();
-        // get the lists
-        var firstList = twoLists.listA();
-        var secondList = twoLists.listB();
-        // check both lists are same length
-        if (firstList.size() != secondList.size()) {
-            System.err.println("Error: The provided lists are not the same length!");
-        }
-
-        // iterate through the lists and calc the abs diff
-        for (int i = 0; i < firstList.size(); i++) {
-            int num1 = firstList.get(i);
-            int num2 = secondList.get(i);
-            int absDiff = Math.abs(num1 - num2);
-            absoluteDifferences.add(absDiff);
-        }
-        return absoluteDifferences;
-    }
-
-    private Integer sumArrayDifferences(List<Integer> arrayDiffs) {
+    private void calculateTotalDistance() {
         int sum = 0;
-        // iterate and sum up the array
-        for (int number : arrayDiffs) {
-            sum += number;
+        for (int i = 0; i < listA.size(); i++) {
+            int distance = Math.abs(listA.get(i) - listB.get(i));
+            sum += distance;
         }
-        return sum;
+        setResultPartOne(sum);
     }
+
+    private void calcSimiliarityScore() {
+        // Create a frequency map of listB to count occurrences of each number.
+        // This is an O(M) operation, where M is the size of listB.
+        Map<Integer, Long> frequencyMapB = listB.stream()
+                .collect(Collectors.groupingBy(number -> number, Collectors.counting()));
+
+        // Iterate through listA and use the frequency map to calculate the score.
+        // This is an O(N) operation, where N is the size of listA.
+        // The total complexity is O(N + M)
+        long score = listA.stream()
+                .mapToLong(numberA -> numberA * frequencyMapB.getOrDefault(numberA, 0L))
+                .sum();
+
+        setResultPartTwo((int) score);
+    }
+
 }

@@ -1,68 +1,132 @@
-// Word Search for all instances of "XMAS"
-// :: allowed directions: diagonal, vertical, written backwords, or even overlapping words
-// --> How many instances of "XMAS"?
+// // Word Search for all instances of "XMAS"
+// // :: allowed directions: diagonal, vertical, written backwords, or even
+// overlapping words
+// // --> How many instances of "XMAS"?
 
 package com.ddrake.adventofcode.year2024.days;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Objects;
 
 import com.ddrake.adventofcode.Day;
 
-public class Day4 implements Day {
+public class Day4 extends Day {
+    char[][] twoDimCharArray;
+    int resultPartOne;
+    int resultPartTwo;
+
+    private void setResultPartOne(int resultPartOne) {
+        this.resultPartOne = resultPartOne;
+    }
+
+    private void setResultPartTwo(int resultPartTwo) {
+        this.resultPartTwo = resultPartTwo;
+    }
+
+    // constructors
+    public Day4(boolean example) {
+        super(example);
+        loadInputAssignToTwoDimArray();
+    }
+
+    public Day4() {
+        this(false);
+    }
+
+    // part methods
     @Override
-    public void solve() {
-        solveForSolution(false);
+    public void part1() {
+        // TwoDimArrayStringChecker twoDimArrayStringChecker = new
+        // TwoDimArrayStringChecker("XMAS", twoDimCharArray);
+        setResultPartOne(
+                new TwoDimArrayStringCheckerForPart1(
+                        "XMAS", twoDimCharArray).countAllInstancesOfString());
+        System.out.println("Number of XMAS instances found: " + resultPartOne);
     }
 
-    public void solveExample() {
-        solveForSolution(true);
+    @Override
+    public void part2() {
+        // For part 2, we're looking for X-shaped patterns of MAS
+        setResultPartTwo(new TwoDimArrayCrossStringCheckerForPart2(
+                "MAS", twoDimCharArray).countAllCrossInstances());
+        System.out.println("Number of X-MAS patterns found: " + resultPartTwo);
     }
 
-    private void solveForSolution(boolean example) {
-        List<String> input = new ArrayList<>();
-        if (example) {
-            input = loadInput(example);
-        } else {
-            input = loadInput(false);
-        }
-        var twoDimArray = convertInputTo2DArray(input);
+    private static Pattern linePattern = Pattern.compile("\\w+");
 
-        // check output
-        // for (char[] line : twoDimArray) {
-        // System.out.println(Arrays.toString(line));
-        // }
+    private static Function<Matcher, char[]> lineMapper = matcher -> {
+        String fullLine = matcher.group(0);
+        return fullLine.toCharArray();
+    };
 
-        int nInstancesXMAS = new TwoDimArrayStringChecker("XMAS", twoDimArray).countAllInstancesOfString();
-        System.out.println("Total number of \"XMAS\" instances: " + nInstancesXMAS);
-
-        // System.out.println(twoDimArray[0][0]);
-        // System.out.println(twoDimArray[0][3]);
-        // System.out.println(twoDimArray[3][0]);
-    }
-
-    private char[][] convertInputTo2DArray(List<String> listStrings) {
-        // init 2D char array
-        char[][] twoDimArray = new char[listStrings.size()][];
-        // iterate through list of strings
-        for (int i = 0; i < listStrings.size(); i++) {
-            // convert each line to a character array
-            twoDimArray[i] = listStrings.get(i).toCharArray();
-        }
-        return twoDimArray;
+    private void loadInputAssignToTwoDimArray() {
+        var inputStream = loadInputStreamLineByLine(linePattern, lineMapper);
+        List<char[]> listCharArr = inputStream.collect(Collectors.toList());
+        twoDimCharArray = listCharArr.toArray(new char[listCharArr.size()][]);
     }
 
 }
+// @Override
+// public void solve() {
+// solveForSolution(false);
+// }
 
-class TwoDimArrayStringChecker {
+// public void solveExample() {
+// solveForSolution(true);
+// }
+
+// private void solveForSolution(boolean example) {
+// List<String> input = new ArrayList<>();
+// if (example) {
+// input = loadInput(example);
+// } else {
+// input = loadInput(false);
+// }
+// var twoDimArray = convertInputTo2DArray(input);
+
+// // check output
+// // for (char[] line : twoDimArray) {
+// // System.out.println(Arrays.toString(line));
+// // }
+
+// int nInstancesXMAS = new TwoDimArrayStringChecker("XMAS",
+// twoDimArray).countAllInstancesOfString();
+// System.out.println("Total number of \"XMAS\" instances: " + nInstancesXMAS);
+
+// // System.out.println(twoDimArray[0][0]);
+// // System.out.println(twoDimArray[0][3]);
+// // System.out.println(twoDimArray[3][0]);
+// }
+
+// private char[][] convertInputTo2DArray(List<String> listStrings) {
+// // init 2D char array
+// char[][] twoDimArray = new char[listStrings.size()][];
+// // iterate through list of strings
+// for (int i = 0; i < listStrings.size(); i++) {
+// // convert each line to a character array
+// twoDimArray[i] = listStrings.get(i).toCharArray();
+// }
+// return twoDimArray;
+// }
+
+// }
+
+class TwoDimArrayStringCheckerForPart1 {
     private String targetString;
     private char[][] twoDimArray;
     private int heightTwoDimArray;
     private int widthTwoDimArray;
     // char[][] indexing ---> [row][col]
 
-    public TwoDimArrayStringChecker(String targetString, char[][] twoDimArray) {
+    public TwoDimArrayStringCheckerForPart1(String targetString, char[][] twoDimArray) {
         this.targetString = targetString;
         this.twoDimArray = twoDimArray;
         this.heightTwoDimArray = twoDimArray.length;
@@ -204,7 +268,8 @@ class TwoDimArrayStringChecker {
                 yield false;
             }
 
-            default -> throw new IllegalArgumentException("Unknown direction: " + direction);
+            default -> throw new IllegalArgumentException("Unknown direction: " +
+                    direction);
         };
     }
 
@@ -233,7 +298,8 @@ class TwoDimArrayStringChecker {
                 yield false;
             }
 
-            default -> throw new IllegalArgumentException("Unknown direction: " + direction);
+            default -> throw new IllegalArgumentException("Unknown direction: " +
+                    direction);
         };
     }
 
@@ -282,8 +348,66 @@ class TwoDimArrayStringChecker {
                 yield false;
             }
 
-            default -> throw new IllegalArgumentException("Unknown direction: " + direction);
+            default -> throw new IllegalArgumentException("Unknown direction: " +
+                    direction);
         };
     }
 
+}
+
+class TwoDimArrayCrossStringCheckerForPart2 {
+    private String targetCrossStringAllowedLetters;
+    private char[][] twoDimArray;
+    private int heightTwoDimArray;
+    private int widthTwoDimArray;
+
+    public TwoDimArrayCrossStringCheckerForPart2(String targetCrossStringAllowedLetters, char[][] twoDimArray) {
+        this.targetCrossStringAllowedLetters = targetCrossStringAllowedLetters;
+        this.twoDimArray = twoDimArray;
+        this.heightTwoDimArray = twoDimArray.length;
+        this.widthTwoDimArray = twoDimArray[0].length;
+    }
+
+    public int countAllCrossInstances() {
+        int count = 0;
+
+        // We need at least 3x3 space for a cross pattern
+        // Iterate through all possible center points
+        for (int row = 1; row < heightTwoDimArray - 1; row++) {
+            for (int col = 1; col < widthTwoDimArray - 1; col++) {
+                if (isCrossPatternAt(row, col)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    private boolean isCrossPatternAt(int centerRow, int centerCol) {
+        // Get the center character - it should be 'A' for MAS pattern
+        char center = twoDimArray[centerRow][centerCol];
+        if (center != targetCrossStringAllowedLetters.charAt(1)) {
+            return false;
+        }
+
+        // Get the four corner characters
+        char topLeft = twoDimArray[centerRow - 1][centerCol - 1];
+        char topRight = twoDimArray[centerRow - 1][centerCol + 1];
+        char bottomLeft = twoDimArray[centerRow + 1][centerCol - 1];
+        char bottomRight = twoDimArray[centerRow + 1][centerCol + 1];
+
+        // Check if both diagonals form valid patterns
+        return isDiagonalValid(topLeft, center, bottomRight) &&
+                isDiagonalValid(topRight, center, bottomLeft);
+    }
+
+    private boolean isDiagonalValid(char start, char middle, char end) {
+        // Check if the diagonal forms the target string forward or backward
+        String forward = "" + start + middle + end;
+        String backward = "" + end + middle + start;
+
+        return forward.equals(targetCrossStringAllowedLetters) ||
+                backward.equals(targetCrossStringAllowedLetters);
+    }
 }

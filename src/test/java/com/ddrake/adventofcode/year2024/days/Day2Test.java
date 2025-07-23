@@ -1,67 +1,50 @@
 package com.ddrake.adventofcode.year2024.days;
 
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import org.junit.Before;
 
 public class Day2Test {
-    private Day2 day2;
+    // private Day2 day2;
+    private Day2 exampleDay2;
 
     @Before
     public void setUp() {
-        day2 = new Day2();
+        // day2 = new Day2();
+        exampleDay2 = new Day2(true);
     }
 
     @Test
-    public void testExampleProblem() {
-        // test with the example input
-        day2.solveExample();
+    public void testLoadInput() {
+        // quick sanity check
+        System.out.println(exampleDay2.listNumArrays);
+        // sample known
+        List<Integer> secondArray = List.of(1, 2, 7, 8, 9);
+        // assertion of the second array in the example input
+        assertEquals(secondArray, exampleDay2.listNumArrays.get(1));
     }
 
     @Test
-    public void testArrayIntegersMonotonicChecker() {
-        // Test strictly increasing
-        assertTrue(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(Arrays.asList(1, 2, 3, 4, 5)));
+    public void testPart1() {
 
-        // Test strictly decreasing
-        assertTrue(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(Arrays.asList(5, 4, 3, 2, 1)));
-
-        // Test not strictly monotonic (has duplicates)
-        assertFalse(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(Arrays.asList(1, 2, 2, 3)));
-
-        // Test not monotonic
-        assertFalse(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(Arrays.asList(1, 3, 2, 4)));
-
-        // Test single element
-        assertTrue(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(Arrays.asList(42)));
-
-        // Test empty list
-        assertTrue(ArrayIntegersMonotonicChecker.isStrictlyMonotonic(new ArrayList<>()));
+        exampleDay2.part1();
+        // day2.part1();
     }
 
     @Test
-    public void testArrayIntegersAdjacencyChecker() {
-        // Test valid differences within range [1, 3]
-        assertTrue(ArrayIntegersAdjacencyChecker.hasValidDifferences(
-                Arrays.asList(7, 6, 4, 2, 1), 1, 3));
-
-        // Test invalid differences (too large)
-        assertFalse(ArrayIntegersAdjacencyChecker.hasValidDifferences(
-                Arrays.asList(1, 2, 7, 8, 9), 1, 3));
-
-        // Test invalid differences (too small)
-        assertFalse(ArrayIntegersAdjacencyChecker.hasValidDifferences(
-                Arrays.asList(1, 1, 2, 3), 1, 3));
-
-        // Test single element
-        assertTrue(ArrayIntegersAdjacencyChecker.hasValidDifferences(
-                Arrays.asList(42), 1, 3));
-
-        // Test empty list
-        assertTrue(ArrayIntegersAdjacencyChecker.hasValidDifferences(
-                new ArrayList<>(), 1, 3));
+    public void testPart2() {
+        exampleDay2.part2();
     }
+
+    @Test
+    public void testIntegerCompare() {
+        System.out.println(Integer.compare(10, 5)); // 1
+        System.out.println(Integer.compare(5, 10)); // -1
+        System.out.println(Integer.compare(5, 5)); // 0
+    }
+
 }
