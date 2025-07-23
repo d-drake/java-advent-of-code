@@ -7,7 +7,7 @@ My solutions to the [Advent of Code](https://adventofcode.com/) programming puzz
 This repository contains my Java solutions for Advent of Code challenges. The project is structured to support multiple years and provides a clean framework for solving daily puzzles.
 
 ## Project Structure
-
+e.g. ~
 ```
 advent/
 ├── src/
@@ -89,13 +89,14 @@ public class Day2 implements Day {
 
 ### [Year 2024](src/main/java/com/ddrake/adventofcode/year2024/days/)
 
-| Day | Problem | Solution | Status |
-|-----|---------|----------|--------|
-| [Day 1](https://adventofcode.com/2024/day/1) | Historian Hysteria | [Day1.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day1.java) | ⭐ |
-| [Day 2](https://adventofcode.com/2024/day/2) | Red-Nosed Reports | [Day2.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day2.java) | ⭐ |
-| [Day 3](https://adventofcode.com/2024/day/3) | Mull It Over | [Day3.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day3.java) | ⭐ |
-| [Day 4](https://adventofcode.com/2024/day/4) | Ceres Search | [Day4.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day4.java) | ⭐ |
-| Day 5-25 | Coming Soon | - | - |
+| Day | Problem | Solution | Part 1 Runtime | Part 2 Runtime | Status |
+|-----|---------|----------|----------------|----------------|--------|
+| [Day 1](https://adventofcode.com/2024/day/1) | Historian Hysteria | [Day1.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day1.java) | 0.877 ms | 14.396 ms | ⭐⭐ |
+| [Day 2](https://adventofcode.com/2024/day/2) | Red-Nosed Reports | [Day2.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day2.java) | 4.105 ms | 1.898 ms | ⭐⭐ |
+| [Day 3](https://adventofcode.com/2024/day/3) | Mull It Over | [Day3.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day3.java) | 5.480 ms | 5.314 ms | ⭐⭐ |
+| [Day 4](https://adventofcode.com/2024/day/4) | Ceres Search | [Day4.java](src/main/java/com/ddrake/adventofcode/year2024/days/Day4.java) | 4.027 ms | 9.705 ms | ⭐⭐ |
+| Day 5-25 | Coming Soon | - | - | - | - |
+
 
 ## Resources
 
